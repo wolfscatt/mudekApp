@@ -1,0 +1,27 @@
+<form class="form-signin w-100 m-auto" >
+    <h1 class="h3 mb-3 fw-normal text-center">Uygulamaya Giriş Yapınız</h1>
+
+    <div class="form-floating">
+        <input type="text"  name="userName" class="form-control"
+            id="userName" placeholder="Kullanıcı Adı" required>
+        <label for="userName">Kullanıcı Adı</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" name="password" class="form-control"
+            id="password" placeholder="Şifre" required>
+        <label for="password">Şifre</label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="userType" id="associate1" value="associate" checked>
+        <label class="form-check-label" for="associate1">Öğretim Üyesi</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="userType" id="headOfDepartment1" value="headOfDepartment">
+        <label class="form-check-label" for="headOfDepartment1">Bölüm Başkanı</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="userType" id="supervisor1" value="supervisor">
+        <label class="form-check-label" for="supervisor1">Müdek Denetçisi</label>
+      </div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Giriş Yap</button>
+</form>
