@@ -1,1 +1,71 @@
-<p>associate works!</p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="mb-3">
+      <label for="schoolYear" class="form-label">Okul Yılı</label>
+      <input type="text" class="form-control" id="schoolYear" formControlName="schoolYear">
+    </div>
+    
+    <div class="mb-3">
+      <label for="semester" class="form-label">Dönem</label>
+      <select class="form-select" id="semester" formControlName="semester">
+        <option value="Güz">Güz</option>
+        <option value="Bahar">Bahar</option>
+      </select>
+    </div>
+    
+    <div class="mb-3">
+      <label for="course" class="form-label">Ders</label>
+      <input type="text" class="form-control" id="course" formControlName="course">
+    </div>
+    
+    <div formArrayName="learningOutcomes" class="mb-3">
+      <div *ngFor="let outcome of learningOutcomes.controls; let i = index" [formGroupName]="i" class="mb-3">
+        <label for="outcome{{i}}" class="form-label">Öğrenme Çıktısı {{i + 1}}</label>
+        <input type="text" class="form-control" id="outcome{{i}}" formControlName="outcome">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addLearningOutcome()">Öğrenme Çıktısı Ekle</button>
+    </div>
+    
+    <div formArrayName="assessments" class="mb-3">
+      <div *ngFor="let assessment of assessments.controls; let i = index" [formGroupName]="i" class="mb-3">
+        <label for="type{{i}}" class="form-label">Değerlendirme Tipi</label>
+        <input type="text" class="form-control" id="type{{i}}" formControlName="type">
+        <label for="score{{i}}" class="form-label">Puan</label>
+        <input type="number" class="form-control" id="score{{i}}" formControlName="score">
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addAssessment()">Değerlendirme Ekle</button>
+    </div>
+    
+    <div class="table-responsive mb-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Öğrenme Çıktıları</th>
+            <th *ngFor="let p of displayedColumns.slice(1)" scope="col">{{ p }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of learningOutcomes.controls">
+            <td>{{row.value.outcome}}</td>
+            <td *ngFor="let p of displayedColumns.slice(1)">
+              <input type="number" class="form-control" [placeholder]="p" min="1" max="5">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="mb-3">
+      <label for="document" class="form-label">Doküman Yükle</label>
+      <input type="file" class="form-control" id="document" (change)="onFileSelected($event)" multiple>
+    </div>
+    
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="confirmation" formControlName="confirmation">
+      <label class="form-check-label" for="confirmation">
+        Tüm belgeleri yüklediğimi onaylıyorum
+      </label>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Gönder</button>
+  </form>
+  
