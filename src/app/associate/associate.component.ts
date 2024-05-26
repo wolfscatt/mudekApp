@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-associate',
@@ -10,7 +11,8 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
   ],
   templateUrl: './associate.component.html',
-  styleUrl: './associate.component.css'
+  styleUrl: './associate.component.css',
+  providers: [FirestoreService]
 })
 export class AssociateComponent {
 
@@ -19,7 +21,7 @@ export class AssociateComponent {
   assessments: FormArray;
   displayedColumns: string[];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private firestoreService: FirestoreService) {
     this.form = this.fb.group({
       schoolYear: [''],
       semester: [''],
@@ -50,7 +52,10 @@ export class AssociateComponent {
   }
 
   submit() {
-    console.log(this.form.value);
+    const formData = this.form.value;
+    this.firestoreService.addData('associates', formData)
+      .then(() => console.log('Data added successfully'))
+      .catch(err => console.error('Error adding data: ', err));
   }
 
 }
