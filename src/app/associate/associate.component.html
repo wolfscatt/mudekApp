@@ -25,16 +25,6 @@
       <button type="button" class="btn btn-primary" (click)="addLearningOutcome()">Öğrenme Çıktısı Ekle</button>
     </div>
     
-    <div formArrayName="assessments" class="mb-3">
-      <div *ngFor="let assessment of assessments.controls; let i = index" [formGroupName]="i" class="mb-3">
-        <label for="type{{i}}" class="form-label">Değerlendirme Tipi</label>
-        <input type="text" class="form-control" id="type{{i}}" formControlName="type">
-        <label for="score{{i}}" class="form-label">Puan</label>
-        <input type="number" class="form-control" id="score{{i}}" formControlName="score">
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addAssessment()">Değerlendirme Ekle</button>
-    </div>
-    
     <div class="table-responsive mb-3">
       <table class="table table-bordered">
         <thead>
@@ -54,6 +44,15 @@
       </table>
     </div>
     
+    <div formArrayName="assessments" class="mb-3">
+      <div *ngFor="let assessment of assessments.controls; let i = index" [formGroupName]="i" class="mb-3">
+        <label for="type{{i}}" class="form-label">Değerlendirme Tipi</label>
+        <input type="text" class="form-control" id="type{{i}}" formControlName="type" readonly>
+        <label for="percentage{{i}}" class="form-label">Yüzde</label>
+        <input type="number" class="form-control" id="percentage{{i}}" formControlName="percentage" min="0" max="100">
+      </div>
+    </div>
+
     <div class="mb-3">
       <label for="document" class="form-label">Doküman Yükle</label>
       <input type="file" class="form-control" id="document" (change)="onFileSelected($event)" multiple>

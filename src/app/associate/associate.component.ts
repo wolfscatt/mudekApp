@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../services/firestore.service';
 
@@ -14,12 +14,13 @@ import { FirestoreService } from '../services/firestore.service';
   styleUrl: './associate.component.css',
   providers: [FirestoreService]
 })
-export class AssociateComponent {
+export class AssociateComponent implements OnInit{
 
   form: FormGroup;
   learningOutcomes: FormArray;
   assessments: FormArray;
   displayedColumns: string[];
+  assessmentTypes: string[] = ['Vize', 'Final', 'Ödev1', 'Ödev2', 'Proje', 'Uygulama'];
 
   constructor(private fb: FormBuilder, private firestoreService: FirestoreService) {
     this.form = this.fb.group({
@@ -38,13 +39,23 @@ export class AssociateComponent {
     this.displayedColumns = ['outcome', ...Array.from({length: 12}, (_, i) => 'P' + (i + 1))];
   }
 
+  ngOnInit(): void {
+    // Initialize assessments with predefined types
+    this.assessmentTypes.forEach(type => {
+      this.assessments.push(this.fb.group({
+        type: [type],
+        percentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
+      }));
+    });
+  }
+
   addLearningOutcome() {
     this.learningOutcomes.push(this.fb.group({ outcome: [''] }));
   }
 
-  addAssessment() {
-    this.assessments.push(this.fb.group({ type: [''], score: [''] }));
-  }
+  // addAssessment() {
+  //   this.assessments.push(this.fb.group({ type: [''], score: [''] }));
+  // }
 
   onFileSelected(event: any) {
     const files = event.target.files;
