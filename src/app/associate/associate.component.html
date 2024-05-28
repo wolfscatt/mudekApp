@@ -50,6 +50,14 @@
         <input type="text" class="form-control" id="type{{i}}" formControlName="type" readonly>
         <label for="percentage{{i}}" class="form-label">Yüzde</label>
         <input type="number" class="form-control" id="percentage{{i}}" formControlName="percentage" min="0" max="100">
+        <div *ngIf="assessments.controls[i].get('percentage')?.invalid && (assessments.controls[i].get('percentage')?.dirty || assessments.controls[i].get('percentage')?.touched)">
+          <div class="text-danger" *ngIf="assessments.controls[i].get('percentage')?.errors">
+            Bu alan zorunludur.
+          </div>
+          <div class="text-danger" *ngIf="assessments.controls[i].get('percentage')?.errors || assessments.controls[i].get('percentage')?.errors">
+            Yüzde değeri 0 ile 100 arasında olmalıdır.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -65,6 +73,10 @@
       </label>
     </div>
     
-    <button type="submit" class="btn btn-primary">Gönder</button>
+    <button type="submit" class="btn btn-primary" [disabled]="totalPercentage !== 100 || form.invalid">Gönder</button>
+
+  <div class="text-danger mt-3" *ngIf="totalPercentage !== 100 && form.dirty && form.touched">
+    Değerlendirme yüzdelerinin toplamı 100 olmalıdır.
+  </div>
   </form>
   

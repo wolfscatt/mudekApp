@@ -13,7 +13,11 @@ form {
     font-weight: bold;
     margin-bottom: 5px;
     -webkit-text-fill-color: black;
+  }
 
+  .form-check-label {
+    font-weight: bold;
+    -webkit-text-fill-color: black;
   }
   
   .form-control,

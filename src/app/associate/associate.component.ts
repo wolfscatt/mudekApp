@@ -21,6 +21,7 @@ export class AssociateComponent implements OnInit{
   assessments: FormArray;
   displayedColumns: string[];
   assessmentTypes: string[] = ['Vize', 'Final', 'Ödev1', 'Ödev2', 'Proje', 'Uygulama'];
+  totalPercentage: number = 0;
 
   constructor(private fb: FormBuilder, private firestoreService: FirestoreService) {
     this.form = this.fb.group({
@@ -47,15 +48,18 @@ export class AssociateComponent implements OnInit{
         percentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
       }));
     });
+    this.form.valueChanges.subscribe(() => {
+      this.calculateTotalPercentage();
+    });
   }
 
   addLearningOutcome() {
     this.learningOutcomes.push(this.fb.group({ outcome: [''] }));
   }
 
-  // addAssessment() {
-  //   this.assessments.push(this.fb.group({ type: [''], score: [''] }));
-  // }
+  addAssessment(type: string) {
+    this.assessments.push(this.fb.group({ type: [type, Validators.required], percentage: [0, [Validators.required, Validators.min(0), Validators.max(100)]] }));
+  }
 
   onFileSelected(event: any) {
     const files = event.target.files;
@@ -67,6 +71,13 @@ export class AssociateComponent implements OnInit{
     this.firestoreService.addData('associates', formData)
       .then(() => console.log('Data added successfully'))
       .catch(err => console.error('Error adding data: ', err));
+  }
+
+  calculateTotalPercentage() {
+    this.totalPercentage = 0;
+    this.assessments.controls.forEach(control => {
+      this.totalPercentage += control.value.percentage;
+    });
   }
 
 }
