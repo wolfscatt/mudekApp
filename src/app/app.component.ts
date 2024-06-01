@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'mudekApp';
+export class AppComponent implements OnInit{
+  accountService = inject(AccountService);
+  
+  ngOnInit(): void {
+    this.accountService.user$.subscribe(user => {
+      if (user) {
+        this.accountService.currentUserSignal.set({
+          email: user.email!,
+          displayName: user.displayName!
+        });
+      } else {
+        this.accountService.currentUserSignal.set(null);
+      }
+      console.log(this.accountService.currentUserSignal());
+    });
+
+  }
 }

@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="text-center mb-4">Register</h2>
+        <div *ngIf="errMessage" class="alert alert-danger">{{ errMessage }}</div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control" required>
+          </div>
+          
+          <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" class="form-control" required>
+          </div>
+          
+          <div class="form-group mb-4">
+            <label for="role">Role</label>
+            <select id="role" formControlName="role" class="form-control" required>
+              <option value="">Select Role</option>
+              <option value="associate">Öğretim Üyesi</option>
+              <option value="headOfDepartment">Bölüm Başkanı</option>
+              <option value="supervisor">MÜDEK Denetçisi</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -6,23 +6,20 @@ import { CommonModule } from '@angular/common';
 import { Auth } from '@angular/fire/auth';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  providers: [AccountService]
+  imports: [CommonModule,
+    ReactiveFormsModule],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
-
+export class RegisterComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
   accountService = inject(AccountService);
   auth = inject(Auth);
 
-  loginForm = this.fb.group({
+  registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
     role: ['', Validators.required]
@@ -31,33 +28,18 @@ export class LoginComponent {
   errMessage: string | null = null;
 
   onSubmit(): void {
-    const rawForm = this.loginForm.getRawValue();
+    const rawForm = this.registerForm.getRawValue();
     const email = rawForm.email ?? '';
     const password = rawForm.password ?? '';
     const role = rawForm.role ?? '';
 
-    this.accountService.login(email, password).subscribe({
+    this.accountService.register(email, password, role).subscribe({
       next: () => {
-        const currentUser = this.auth.currentUser;
-        if(currentUser){
-          this.accountService.getUserRole(currentUser.uid).then(role => {
-            if(role === 'supervisor'){
-              this.router.navigate(['/supervisor']);
-            } else if(role === 'associate'){
-              this.router.navigate(['/associate']);
-            } else if(role === 'headOfDepartment') {
-              this.router.navigate(['/headOfDepartment']);
-            } 
-        })};
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.errMessage = err.code;
       }
     });
   }
-
-  navigateToRegister() {
-    this.router.navigate(['/register']);
-  }
 }
-
