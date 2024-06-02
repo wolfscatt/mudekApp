@@ -1,26 +1,37 @@
-
-<nav class="navbar navbar-expand-lg bg-danger ">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/"><h5>Anasayfa</h5></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="associate"><h5>Öğretim Üyesi</h5></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="headOfDepartment"><h5>Bölüm Başkanı</h5></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="supervisor"><h5>Müdek Denetçisi</h5></a>
-                </li>
-               
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="/">MudekApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
+          <a class="nav-link" routerLink="/associate">Öğretim Üyesi</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
+          <a class="nav-link" routerLink="/courseManagement">Ders Ekleme</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
+          <a class="nav-link" routerLink="/evaluation">Değerlendirme</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
+          <a class="nav-link" routerLink="/gradeEntry">Not Girme</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && (userRole === 'supervisor' || userRole === 'headOfDepartment')">
+          <a class="nav-link" routerLink="/courseReview">Dersleri İnceleme</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn && (userRole === 'supervisor' || userRole === 'headOfDepartment')">
+          <a class="nav-link" routerLink="/feedback">Geri Bildirim Gönderme</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto" id="LogBtn">
+        <li class="nav-item" *ngIf="isLoggedIn" class="ml-auto">
+          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button class="btn btn-outline-success" (click)="login()">Login</button>
+        </li>
+      </ul>
     </div>
-</nav> 
+  </nav>
+  

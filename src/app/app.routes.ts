@@ -5,9 +5,11 @@ import { AssociateComponent } from './associate/associate.component';
 import { HeadOfDepartmentComponent } from './head-of-department/head-of-department.component';
 import { AuthGuard } from './login/auth.guard';
 import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo : 'register', pathMatch: 'full' },
+    { path: '', redirectTo : 'home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'supervisor', component: SupervisorComponent, canActivate: [AuthGuard]},
