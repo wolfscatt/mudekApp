@@ -45,9 +45,15 @@ export class CourseManagementComponent {
         formValue.courseAssessments!,
         formValue.courseInstructor!
       );
-      this.firestoreService.addData('courses',courseData);
-      this.courses.push(courseData);
-      //console.log(this.courses);
+      this.firestoreService.addData('courses', courseData.toJSON())
+      .then(() => {
+        // Firestore'a veri eklendikten sonra başarıyla eklendiğini kabul edip yerel listeye ekleyebiliriz
+        this.courses.push(courseData);
+        console.log('Course added successfully:', courseData);
+      })
+      .catch(error => {
+        console.error('Error adding course:', error);
+      });
     }
   }
 }

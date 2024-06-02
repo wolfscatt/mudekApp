@@ -11,12 +11,6 @@
         <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
           <a class="nav-link" routerLink="/associate/courseManagement">Ders Ekleme</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
-          <a class="nav-link" routerLink="/evaluation">Değerlendirme</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
-          <a class="nav-link" routerLink="/gradeEntry">Not Girme</a>
-        </li>
         <li class="nav-item" *ngIf="isLoggedIn && (userRole === 'supervisor' || userRole === 'headOfDepartment')">
           <a class="nav-link" routerLink="/courseReview">Dersleri İnceleme</a>
         </li>

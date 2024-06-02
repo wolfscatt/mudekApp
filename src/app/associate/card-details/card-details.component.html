@@ -1,0 +1,16 @@
+<!-- card-details.component.html -->
+<div *ngIf="course">
+    <h2>{{ course?.courseName }}</h2>
+    <p><strong>Okul Yılı:</strong> {{ course?.courseYear }}</p>
+    <p><strong>Okul Dönemi:</strong> {{ course?.courseSemester }}</p>
+    <p><strong>Ders Kodu:</strong> {{ course?.courseCode }}</p>
+    <p><strong>Kredi:</strong> {{ course?.courseCredit }}</p>
+    <p><strong>Ders Tanımı:</strong> {{ course?.courseDescription }}</p>
+    <p><strong>Öğrenme Çıktıları:</strong> {{ course?.courseLearningOutcomes }}</p>
+    <p><strong>Değerlendirme Yöntemleri:</strong> {{ course?.courseAssessments }}</p>
+    <p><strong>Dersin Hocası:</strong> {{ course?.courseInstructor }}</p>
+  </div>
+  <div *ngIf="!course">
+    <p>Loading course details...</p>
+  </div>
+  

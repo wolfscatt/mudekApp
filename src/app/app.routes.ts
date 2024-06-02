@@ -7,6 +7,7 @@ import { AuthGuard } from './login/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { CourseManagementComponent } from './associate/course-management/course-management.component';
+import { CardDetailsComponent } from './associate/card-details/card-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo : 'home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'supervisor', component: SupervisorComponent, canActivate: [AuthGuard]},
     { path: 'associate', component: AssociateComponent, canActivate: [AuthGuard]},
     { path: 'associate/courseManagement', component: CourseManagementComponent, canActivate: [AuthGuard]},
+    { path: 'associate/cardDetails/:courseCode', component: CardDetailsComponent, canActivate: [AuthGuard]},
     { path: 'headOfDepartment', component: HeadOfDepartmentComponent, canActivate: [AuthGuard]},
 
 ];

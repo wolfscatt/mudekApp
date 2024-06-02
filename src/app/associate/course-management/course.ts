@@ -20,4 +20,19 @@ export class Course {
         this.courseAssessments = courseAssessments;
         this.courseInstructor = courseInstructor;
     }
+    
+
+    toJSON() {
+        return {
+          courseYear: this.courseYear,
+          courseSemester: this.courseSemester,
+          courseName: this.courseName,
+          courseCode: this.courseCode,
+          courseCredit: this.courseCredit,
+          courseDescription: this.courseDescription,
+          courseLearningOutcomes: this.courseLearningOutcomes,
+          courseAssessments: this.courseAssessments,
+          courseInstructor: this.courseInstructor
+        };
+      }
 }

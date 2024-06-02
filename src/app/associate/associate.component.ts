@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FirestoreService } from '../services/firestore.service';
 import { Course } from './course-management/course';
 import { CourseCardComponent } from './course-card/course-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-associate',
@@ -19,6 +20,7 @@ import { CourseCardComponent } from './course-card/course-card.component';
 })
 export class AssociateComponent implements OnInit{
   firestoreService = inject(FirestoreService);
+  router = inject(Router);
   courses: Course[] = [];
 
 
@@ -33,6 +35,8 @@ export class AssociateComponent implements OnInit{
   }
 
  
-
+  goToCourseDetails(courseCode: string){
+    this.router.navigate(['/associate/cardDetails', courseCode]);
+  }
 
 }
