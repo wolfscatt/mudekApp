@@ -7,11 +7,11 @@ import { AuthGuard } from './login/auth.guard';
 import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
-    { path: '', component: RegisterComponent, pathMatch: 'full' },
+    { path: '', redirectTo : 'register', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'supervisor', component: SupervisorComponent, canActivate: [AuthGuard]},
-    { path: 'associate', component: AssociateComponent},
-    { path: 'headOfDepartment', component: HeadOfDepartmentComponent},
+    { path: 'associate', component: AssociateComponent, canActivate: [AuthGuard]},
+    { path: 'headOfDepartment', component: HeadOfDepartmentComponent, canActivate: [AuthGuard]},
 
 ];

@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, user, UserProfile } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, user, UserProfile, signOut } from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore'; // Firestore doğru şekilde import edildi
 import { Observable, from } from 'rxjs';
 
@@ -31,6 +31,12 @@ export class AccountService {
 
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password).then(() => { });
+    return from(promise);
+  }
+  logout(): Observable<void> {
+    const promise = signOut(this.firebaseAuth).then(() => { 
+      this.currentUserSignal.set(null);
+    });
     return from(promise);
   }
 
