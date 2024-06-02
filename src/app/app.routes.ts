@@ -6,6 +6,7 @@ import { HeadOfDepartmentComponent } from './head-of-department/head-of-departme
 import { AuthGuard } from './login/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
+import { CourseManagementComponent } from './associate/course-management/course-management.component';
 
 export const routes: Routes = [
     { path: '', redirectTo : 'home', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'supervisor', component: SupervisorComponent, canActivate: [AuthGuard]},
     { path: 'associate', component: AssociateComponent, canActivate: [AuthGuard]},
+    { path: 'associate/courseManagement', component: CourseManagementComponent, canActivate: [AuthGuard]},
     { path: 'headOfDepartment', component: HeadOfDepartmentComponent, canActivate: [AuthGuard]},
 
 ];

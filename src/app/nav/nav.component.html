@@ -9,7 +9,7 @@
           <a class="nav-link" routerLink="/associate">Öğretim Üyesi</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
-          <a class="nav-link" routerLink="/courseManagement">Ders Ekleme</a>
+          <a class="nav-link" routerLink="/associate/courseManagement">Ders Ekleme</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedIn && userRole === 'associate'">
           <a class="nav-link" routerLink="/evaluation">Değerlendirme</a>
