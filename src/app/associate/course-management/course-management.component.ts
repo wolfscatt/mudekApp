@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Course } from './course';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-course-management',
@@ -15,6 +16,7 @@ import { Course } from './course';
 export class CourseManagementComponent {
 
   fb = inject(FormBuilder);
+  firestoreService = inject(FirestoreService)
   courses: Course[] = [];
 
   courseForm = this.fb.group({
@@ -43,6 +45,7 @@ export class CourseManagementComponent {
         formValue.courseAssessments!,
         formValue.courseInstructor!
       );
+      this.firestoreService.addData('courses',courseData);
       this.courses.push(courseData);
       //console.log(this.courses);
     }

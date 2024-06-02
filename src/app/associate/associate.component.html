@@ -1,82 +1,17 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="mb-3">
-      <label for="schoolYear" class="form-label">Okul Yılı</label>
-      <input type="text" class="form-control" id="schoolYear" formControlName="schoolYear">
-    </div>
-    
-    <div class="mb-3">
-      <label for="semester" class="form-label">Dönem</label>
-      <select class="form-select" id="semester" formControlName="semester">
-        <option value="Güz">Güz</option>
-        <option value="Bahar">Bahar</option>
-      </select>
-    </div>
-    
-    <div class="mb-3">
-      <label for="course" class="form-label">Ders</label>
-      <input type="text" class="form-control" id="course" formControlName="course">
-    </div>
-    
-    <div formArrayName="learningOutcomes" class="mb-3">
-      <div *ngFor="let outcome of learningOutcomes.controls; let i = index" [formGroupName]="i" class="mb-3">
-        <label for="outcome{{i}}" class="form-label">Öğrenme Çıktısı {{i + 1}}</label>
-        <input type="text" class="form-control" id="outcome{{i}}" formControlName="outcome">
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addLearningOutcome()">Öğrenme Çıktısı Ekle</button>
-    </div>
-    
-    <div class="table-responsive mb-3">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Öğrenme Çıktıları</th>
-            <th *ngFor="let p of displayedColumns.slice(1)" scope="col">{{ p }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of learningOutcomes.controls">
-            <td>{{row.value.outcome}}</td>
-            <td *ngFor="let p of displayedColumns.slice(1)">
-              <input type="number" class="form-control" [placeholder]="p" min="1" max="5">
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
-    <div formArrayName="assessments" class="mb-3">
-      <div *ngFor="let assessment of assessments.controls; let i = index" [formGroupName]="i" class="mb-3">
-        <label for="type{{i}}" class="form-label">Değerlendirme Tipi</label>
-        <input type="text" class="form-control" id="type{{i}}" formControlName="type" readonly>
-        <label for="percentage{{i}}" class="form-label">Yüzde</label>
-        <input type="number" class="form-control" id="percentage{{i}}" formControlName="percentage" min="0" max="100">
-        <div *ngIf="assessments.controls[i].get('percentage')?.invalid && (assessments.controls[i].get('percentage')?.dirty || assessments.controls[i].get('percentage')?.touched)">
-          <div class="text-danger" *ngIf="assessments.controls[i].get('percentage')?.errors">
-            Bu alan zorunludur.
-          </div>
-          <div class="text-danger" *ngIf="assessments.controls[i].get('percentage')?.errors || assessments.controls[i].get('percentage')?.errors">
-            Yüzde değeri 0 ile 100 arasında olmalıdır.
+<!-- associate.component.html -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4">Courses</h2>
+      <div class="card-deck">
+        <!-- Kartları listelemek için *ngFor kullanıyoruz -->
+        <div class="card mb-3" *ngFor="let course of courses">
+          <div class="card-body">
+            <h5 class="card-title">{{ course.courseName }}</h5>
+            <app-course-card [course]="course"></app-course-card>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="mb-3">
-      <label for="document" class="form-label">Doküman Yükle</label>
-      <input type="file" class="form-control" id="document" (change)="onFileSelected($event)" multiple>
-    </div>
-    
-    <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" id="confirmation" formControlName="confirmation">
-      <label class="form-check-label" for="confirmation">
-        Tüm belgeleri yüklediğimi onaylıyorum
-      </label>
-    </div>
-    
-    <button type="submit" class="btn btn-primary" [disabled]="totalPercentage !== 100 || form.invalid">Gönder</button>
-
-  <div class="text-danger mt-3" *ngIf="totalPercentage !== 100 && form.dirty && form.touched">
-    Değerlendirme yüzdelerinin toplamı 100 olmalıdır.
   </div>
-  </form>
-  
+</div>
