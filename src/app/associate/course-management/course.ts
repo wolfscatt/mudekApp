@@ -5,11 +5,11 @@ export class Course {
     courseCode: string | null;
     courseCredit: string | null;
     courseDescription: string | null;
-    courseLearningOutcomes: string | null;
-    courseAssessments: string | null;
+    courseLearningOutcomes: Array<string> | null;
+    courseSyllabus: string | null;
     courseInstructor: string | null;
 
-    constructor(courseYear: string, courseSemester: string, courseName: string, courseCode: string, courseCredit: string, courseDescription: string, courseLearningOutcomes: string, courseAssessments: string, courseInstructor: string) {
+    constructor(courseYear: string, courseSemester: string, courseName: string, courseCode: string, courseCredit: string, courseDescription: string, courseLearningOutcomes: Array<string>, courseSyllabus: string, courseInstructor: string) {
         this.courseYear = courseYear;
         this.courseSemester = courseSemester;
         this.courseName = courseName;
@@ -17,7 +17,7 @@ export class Course {
         this.courseCredit = courseCredit;
         this.courseDescription = courseDescription;
         this.courseLearningOutcomes = courseLearningOutcomes;
-        this.courseAssessments = courseAssessments;
+        this.courseSyllabus = courseSyllabus;
         this.courseInstructor = courseInstructor;
     }
     
@@ -31,7 +31,7 @@ export class Course {
           courseCredit: this.courseCredit,
           courseDescription: this.courseDescription,
           courseLearningOutcomes: this.courseLearningOutcomes,
-          courseAssessments: this.courseAssessments,
+          courseSyllabus: this.courseSyllabus,
           courseInstructor: this.courseInstructor
         };
       }

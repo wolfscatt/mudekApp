@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Course } from './course';
-import { FirestoreService } from '../../services/firestore.service';
+import { FirebaseService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-course-management',
@@ -11,13 +11,15 @@ import { FirestoreService } from '../../services/firestore.service';
     CommonModule,
     ReactiveFormsModule,],
   templateUrl: './course-management.component.html',
-  styleUrl: './course-management.component.css'
+  styleUrl: './course-management.component.css',
+  providers: [FirebaseService]
 })
 export class CourseManagementComponent {
 
   fb = inject(FormBuilder);
-  firestoreService = inject(FirestoreService)
+  firebaseService = inject(FirebaseService)
   courses: Course[] = [];
+  //learningOutcomes: string[] = [];
 
   courseForm = this.fb.group({
     courseYear: ['', [Validators.required]],
@@ -26,12 +28,35 @@ export class CourseManagementComponent {
     courseCode: ['', [Validators.required]],
     courseCredit: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
     courseDescription: ['', [Validators.required]],
-    courseLearningOutcomes: ['', [Validators.required]],
-    courseAssessments: ['', [Validators.required]],
+    courseLearningOutcomes: this.fb.array([]),
+    courseSyllabus: [null, [Validators.required]],
     courseInstructor: ['', [Validators.required]]
   });
 
-  onSubmit(): void {
+
+  get courseLearningOutcomes() {
+    return this.courseForm.get('courseLearningOutcomes') as FormArray;
+  }
+
+  addLearningOutcome(): void {
+    this.courseLearningOutcomes.push(this.fb.control('', Validators.required));
+  }
+
+  removeLearningOutcome(index: number): void {
+    this.courseLearningOutcomes.removeAt(index);
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+  if (file) {
+    this.courseForm.patchValue({ courseSyllabus: file });
+
+    // Clear any previous error state related to courseSyllabus
+    this.courseForm.get('courseSyllabus')?.setErrors(null);
+  }
+  }
+
+  uploadFirebase(): void {
     if (this.courseForm.valid) {
       const formValue = this.courseForm.getRawValue();
       const courseData: Course = new Course(
@@ -41,19 +66,47 @@ export class CourseManagementComponent {
         formValue.courseCode!,
         formValue.courseCredit!,
         formValue.courseDescription!,
-        formValue.courseLearningOutcomes!,
-        formValue.courseAssessments!,
+        this.courseLearningOutcomes.value!,
+        formValue.courseSyllabus!,
         formValue.courseInstructor!
       );
-      this.firestoreService.addData('courses', courseData.toJSON())
+
+      if (typeof formValue.courseSyllabus !== 'string') {
+        this.firebaseService.uploadFile('syllabus/' + courseData.courseCode, formValue.courseSyllabus!)
+          .subscribe(
+            syllabusUrl => {
+              courseData.courseSyllabus = syllabusUrl;
+              this.addToFirestore(courseData);
+            },
+            error => {
+              console.error('Error uploading syllabus:', error);
+            }
+          );
+      } else {
+        this.addToFirestore(courseData);
+      }
+    }
+  }
+
+  private addToFirestore(courseData: Course): void {
+    this.firebaseService.addData('courses', courseData.toJSON())
       .then(() => {
-        // Firestore'a veri eklendikten sonra başarıyla eklendiğini kabul edip yerel listeye ekleyebiliriz
         this.courses.push(courseData);
         console.log('Course added successfully:', courseData);
+        this.resetForm();
       })
       .catch(error => {
         console.error('Error adding course:', error);
       });
-    }
+  }
+  
+
+  onSubmit(): void {
+    this.uploadFirebase();
+  }
+
+  resetForm(): void {
+    this.courseForm.reset();
+    this.courseLearningOutcomes.clear();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FirestoreService } from '../services/firestore.service';
+import { FirebaseService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-head-of-department',
@@ -12,12 +12,12 @@ import { FirestoreService } from '../services/firestore.service';
   ],
   templateUrl: './head-of-department.component.html',
   styleUrl: './head-of-department.component.css',
-  providers: [FirestoreService]
+  providers: [FirebaseService]
 })
 export class HeadOfDepartmentComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private firestoreService: FirestoreService) {
+  constructor(private fb: FormBuilder, private firestoreService: FirebaseService) {
     this.form = this.fb.group({
       approvalStatus: this.fb.array([])
     });

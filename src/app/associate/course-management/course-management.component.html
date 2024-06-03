@@ -1,64 +1,69 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="text-center mb-4">Ders Yönetimi</h2>
-            <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
-
-                <div class="form-group mb-3">
-                    <label for="courseYear">Okul Yılı</label>
-                    <input type="text" id="courseYear" formControlName="courseYear" class="form-control" required>
+      <div class="col-md-8">
+        <h2 class="text-center mb-4">Ders Yönetimi</h2>
+        <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  
+          <div class="form-group mb-3">
+            <label for="courseYear">Okul Yılı</label>
+            <input type="text" id="courseYear" formControlName="courseYear" class="form-control" required>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseSemester">Okul Dönemi</label>
+            <select id="courseSemester" formControlName="courseSemester" class="form-control" required>
+              <option value="">Dönem Seçin</option>
+              <option value="Güz">Güz</option>
+              <option value="Bahar">Bahar</option>
+            </select>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseName">Ders İsmi</label>
+            <input type="text" id="courseName" formControlName="courseName" class="form-control" required>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseCode">Ders Kodu</label>
+            <input type="text" id="courseCode" formControlName="courseCode" class="form-control" required>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseCredit">Kredi</label>
+            <input type="number" id="courseCredit" formControlName="courseCredit" class="form-control" required>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseDescription">Ders Tanımı</label>
+            <textarea id="courseDescription" formControlName="courseDescription" class="form-control" required></textarea>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="courseLearningOutcomes">Öğrenme Çıktıları</label>
+            <div formArrayName="courseLearningOutcomes">
+              <div *ngFor="let outcome of courseLearningOutcomes.controls; let i=index" class="input-group mb-2">
+                <input [formControlName]="i" class="form-control" placeholder="Öğrenme Çıktısı">
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-danger" (click)="removeLearningOutcome(i)">Sil</button>
                 </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseSemester">Okul Dönemi</label>
-                    <select id="courseSemester" formControlName="courseSemester" class="form-control" required>
-                        <option value="">Dönem Seçin</option>
-                        <option value="Güz">Güz</option>
-                        <option value="Bahar">Bahar</option>
-                    </select>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseName">Ders İsmi</label>
-                    <input type="text" id="courseName" formControlName="courseName" class="form-control" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseCode">Ders Kodu</label>
-                    <input type="text" id="courseCode" formControlName="courseCode" class="form-control" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseCredit">Kredi</label>
-                    <input type="number" id="courseCredit" formControlName="courseCredit" class="form-control" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseDescription">Ders Tanımı</label>
-                    <textarea id="courseDescription" formControlName="courseDescription" class="form-control"
-                        required></textarea>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseLearningOutcomes">Öğrenme Çıktıları</label>
-                    <textarea id="courseLearningOutcomes" formControlName="courseLearningOutcomes" class="form-control"
-                        required></textarea>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseAssessments">Değerlendirme Yöntemleri</label>
-                    <textarea id="courseAssessments" formControlName="courseAssessments" class="form-control"
-                        required></textarea>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label for="courseInstructor">Dersin Hocası</label>
-                    <input type="text" id="courseInstructor" formControlName="courseInstructor" class="form-control"
-                        required>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
-            </form>
-        </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="addLearningOutcome()">Öğrenme Çıktısı Ekle</button>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="syllabus">Ders İzlencesi Yükle</label>
+            <input type="file" id="syllabus" (change)="onFileSelected($event)" class="form-control" multiple>
+          </div>
+          <div class="form-group mb-3">
+            <label for="courseInstructor">Dersin Hocası</label>
+            <input type="text" id="courseInstructor" formControlName="courseInstructor" class="form-control" required>
+          </div>
+  
+  
+          <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
+  

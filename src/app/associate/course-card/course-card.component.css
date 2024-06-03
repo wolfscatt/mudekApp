@@ -1,6 +1,6 @@
 .card {
   width: 250px;
-  height: 200px;
+  height: 220px;
   border-radius: 15px;
   background: rgba(105, 13, 197, 0.103);
   display: flex;
@@ -35,6 +35,24 @@
 .subtitle {
   font-size: .6em;
   font-weight: 300;
+  color: rgba(240, 248, 255, 0.691);
+}
+
+.description {
+  font-size: 1em;
+  font-weight: 500;
+  color: rgba(254, 255, 255, 0.959);
+}
+
+.credit {
+  font-size: .8em;
+  font-weight: 400;
+  color: rgba(243, 247, 250, 0.932);
+}
+
+.course-instructor {
+  font-size: .9em;
+  font-weight: 400;
   color: rgba(240, 248, 255, 0.691);
 }
 

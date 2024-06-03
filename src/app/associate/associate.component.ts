@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FirestoreService } from '../services/firestore.service';
+import { FirebaseService } from '../services/firestore.service';
 import { Course } from './course-management/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { Router } from '@angular/router';
@@ -16,10 +16,10 @@ import { Router } from '@angular/router';
   ],
   templateUrl: './associate.component.html',
   styleUrl: './associate.component.css',
-  providers: [FirestoreService]
+  providers: [FirebaseService]
 })
 export class AssociateComponent implements OnInit{
-  firestoreService = inject(FirestoreService);
+  firebaseService = inject(FirebaseService);
   router = inject(Router);
   courses: Course[] = [];
 
@@ -29,7 +29,7 @@ export class AssociateComponent implements OnInit{
   }
 
   fetchCourses(){
-    this.firestoreService.getData('courses').subscribe(data => {
+    this.firebaseService.getData('courses').subscribe(data => {
       this.courses = data;
     });
   }
@@ -37,6 +37,23 @@ export class AssociateComponent implements OnInit{
  
   goToCourseDetails(courseCode: string){
     this.router.navigate(['/associate/cardDetails', courseCode]);
+  }
+
+  downloadSyllabus(courseCode: string): void {
+    const course = this.courses.find(c => c.courseCode === courseCode);
+    if (course && course.courseSyllabus) {
+      this.firebaseService.downloadFile(course.courseSyllabus).subscribe(
+        url => {
+          console.log('Dosya URL\'si:', url);
+          window.open(url, '_blank'); // Yeni sekmede açmak için
+        },
+        error => {
+          console.error('Dosya indirme hatası:', error);
+        }
+      );
+    } else {
+      console.error('Kurs veya syllabus bulunamadı:', courseCode);
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FirestoreService } from '../../services/firestore.service';
+import { FirebaseService } from '../../services/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../course-management/course';
 import { CommonModule } from '@angular/common';
@@ -13,13 +13,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   templateUrl: './card-details.component.html',
   styleUrl: './card-details.component.css',
-  providers: [FirestoreService]
+  providers: [FirebaseService]
 })
 export class CardDetailsComponent implements OnInit{
  
-  firestoreService = inject(FirestoreService);
+  firestoreService = inject(FirebaseService);
   route = inject(ActivatedRoute);
-  course: Course | undefined = new Course("","","","","","","","","");
+  course: Course | undefined = new Course("","","","","","",[],"","");
 
   ngOnInit(): void {
     const courseCode = this.route.snapshot.paramMap.get('courseCode');

@@ -1,10 +1,10 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-12">
-      <h2 class="text-center mb-4">Courses</h2>
+      <h2 class="text-center mb-4">Dersler</h2>
       <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let course of courses">
-          <app-course-card [course]="course" (click)="goToCourseDetails(course.courseCode!)"></app-course-card>
+          <app-course-card [course]="course" (click)="goToCourseDetails(course.courseCode!)" (downloadSyllabusEvent)="downloadSyllabus($event)"></app-course-card>
         </div>
       </div>
     </div>

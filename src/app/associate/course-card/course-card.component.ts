@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { FirebaseService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-course-card',
@@ -9,5 +10,12 @@ import { Component, Input } from '@angular/core';
 })
 export class CourseCardComponent {
   @Input() course: any;
+  @Output() downloadSyllabusEvent = new EventEmitter<string>();
+  firebaseService = inject(FirebaseService);
+
+
+  downloadSyllabus(courseCode: string): void {
+    this.downloadSyllabusEvent.emit(courseCode);
+  }
 
 }
