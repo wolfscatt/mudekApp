@@ -12,7 +12,7 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  const commonEngine = new CommonEngine({enablePerformanceProfiler: true});
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
@@ -34,7 +34,7 @@ export function app(): express.Express {
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));
