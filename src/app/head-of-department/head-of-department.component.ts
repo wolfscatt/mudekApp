@@ -50,9 +50,9 @@ export class HeadOfDepartmentComponent implements OnInit {
     const formData = this.form.value;
     console.log('Form data: ', formData);
     // Firestore'a verileri kaydetme işlemi
-    this.firestoreService.updateData('associates', formData)
-      .then(() => console.log('Data updated successfully'))
-      .catch(err => console.error('Error updating data: ', err));
+    // this.firestoreService.updateData('associates', formData)
+    //   .then(() => console.log('Data updated successfully'))
+    //   .catch(err => console.error('Error updating data: ', err));
   }
 
   rejectForm() {

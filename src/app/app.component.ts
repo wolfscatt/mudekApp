@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
       } else {
         this.accountService.currentUserSignal.set(null);
       }
-      console.log(this.accountService.currentUserSignal());
+      console.log('User: '+this.accountService.currentUserSignal());
     });
 
   }

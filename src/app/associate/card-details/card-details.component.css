@@ -1,0 +1,75 @@
+.container {
+    position: relative;
+  }
+
+h2 {
+    text-align: center;
+  }
+  
+  .subtitle {
+    text-align: center;
+    font-size: 1.2em;
+    color: gray;
+  }
+  
+  .divider {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+  }
+  
+  .details {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .learning-outcomes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .learning-outcomes th,
+  .learning-outcomes td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .learning-outcomes th {
+    background-color: #323135;
+  }
+  
+  input[type="number"] {
+    width: 50px;
+  }
+  
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .buttons {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    margin-top: 20px; /* Butonlarla divider arasında bir boşluk bırakmak için */
+  }
+  
+  .buttons button {
+    margin-left: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .buttons {
+      position: static;
+      margin-top: 20px;
+      text-align: center;
+    }
+  }

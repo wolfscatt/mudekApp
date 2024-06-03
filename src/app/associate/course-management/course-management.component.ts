@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Course } from './course';
 import { FirebaseService } from '../../services/firestore.service';
 
@@ -38,6 +38,7 @@ export class CourseManagementComponent {
     return this.courseForm.get('courseLearningOutcomes') as FormArray;
   }
 
+
   addLearningOutcome(): void {
     this.courseLearningOutcomes.push(this.fb.control('', Validators.required));
   }
@@ -59,6 +60,14 @@ export class CourseManagementComponent {
   uploadFirebase(): void {
     if (this.courseForm.valid) {
       const formValue = this.courseForm.getRawValue();
+      const learningOutcomesWithPValues = this.courseLearningOutcomes.value!.map((outcome: string) => {
+        const pValues: { [key: string]: number | null } = {};
+        for (let i = 1; i <= 12; i++) {
+          pValues[`P${i}`] = null;
+        }
+        return { outcome, pValues };
+      });
+
       const courseData: Course = new Course(
         formValue.courseYear!,
         formValue.courseSemester!,
@@ -66,7 +75,7 @@ export class CourseManagementComponent {
         formValue.courseCode!,
         formValue.courseCredit!,
         formValue.courseDescription!,
-        this.courseLearningOutcomes.value!,
+        learningOutcomesWithPValues,
         formValue.courseSyllabus!,
         formValue.courseInstructor!
       );

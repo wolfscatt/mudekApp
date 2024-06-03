@@ -1,38 +1,44 @@
 export class Course {
-    courseYear: string | null;
-    courseSemester: string | null;
-    courseName: string | null;
-    courseCode: string | null;
-    courseCredit: string | null;
-    courseDescription: string | null;
-    courseLearningOutcomes: Array<string> | null;
-    courseSyllabus: string | null;
-    courseInstructor: string | null;
+  courseYear: string | null;
+  courseSemester: string | null;
+  courseName: string | null;
+  courseCode: string | null;
+  courseCredit: string | null;
+  courseDescription: string | null;
+  courseLearningOutcomes: {
+    outcome: string;
+    pValues: { [key: string]: number }; // pValues tanımı
+  }[] | null;
+  courseSyllabus: string | null;
+  courseInstructor: string | null;
 
-    constructor(courseYear: string, courseSemester: string, courseName: string, courseCode: string, courseCredit: string, courseDescription: string, courseLearningOutcomes: Array<string>, courseSyllabus: string, courseInstructor: string) {
-        this.courseYear = courseYear;
-        this.courseSemester = courseSemester;
-        this.courseName = courseName;
-        this.courseCode = courseCode;
-        this.courseCredit = courseCredit;
-        this.courseDescription = courseDescription;
-        this.courseLearningOutcomes = courseLearningOutcomes;
-        this.courseSyllabus = courseSyllabus;
-        this.courseInstructor = courseInstructor;
-    }
-    
+  constructor(courseYear: string, courseSemester: string, courseName: string, courseCode: string, courseCredit: string, courseDescription: string, courseLearningOutcomes: {
+    outcome: string;
+    pValues: { [key: string]: number }; 
+  }[], courseSyllabus: string, courseInstructor: string) {
+    this.courseYear = courseYear;
+    this.courseSemester = courseSemester;
+    this.courseName = courseName;
+    this.courseCode = courseCode;
+    this.courseCredit = courseCredit;
+    this.courseDescription = courseDescription;
+    this.courseLearningOutcomes = courseLearningOutcomes;
+    this.courseSyllabus = courseSyllabus;
+    this.courseInstructor = courseInstructor;
+  }
 
-    toJSON() {
-        return {
-          courseYear: this.courseYear,
-          courseSemester: this.courseSemester,
-          courseName: this.courseName,
-          courseCode: this.courseCode,
-          courseCredit: this.courseCredit,
-          courseDescription: this.courseDescription,
-          courseLearningOutcomes: this.courseLearningOutcomes,
-          courseSyllabus: this.courseSyllabus,
-          courseInstructor: this.courseInstructor
-        };
-      }
+
+  toJSON() {
+    return {
+      courseYear: this.courseYear,
+      courseSemester: this.courseSemester,
+      courseName: this.courseName,
+      courseCode: this.courseCode,
+      courseCredit: this.courseCredit,
+      courseDescription: this.courseDescription,
+      courseLearningOutcomes: this.courseLearningOutcomes,
+      courseSyllabus: this.courseSyllabus,
+      courseInstructor: this.courseInstructor
+    };
+  }
 }

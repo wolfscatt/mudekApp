@@ -1,16 +1,53 @@
-<!-- card-details.component.html -->
-<div *ngIf="course">
-    <h2>{{ course?.courseName }}</h2>
-    <p><strong>Okul Yılı:</strong> {{ course?.courseYear }}</p>
-    <p><strong>Okul Dönemi:</strong> {{ course?.courseSemester }}</p>
-    <p><strong>Ders Kodu:</strong> {{ course?.courseCode }}</p>
-    <p><strong>Kredi:</strong> {{ course?.courseCredit }}</p>
-    <p><strong>Ders Tanımı:</strong> {{ course?.courseDescription }}</p>
-    <p><strong>Öğrenme Çıktıları:</strong> {{ course?.courseLearningOutcomes }}</p>
-    <p><strong>Ders İzlencesi:</strong> {{ course?.courseSyllabus }}</p>
-    <p><strong>Dersin Hocası:</strong> {{ course?.courseInstructor }}</p>
-  </div>
-  <div *ngIf="!course">
-    <p>Loading course details...</p>
-  </div>
+<div *ngIf="course" class="container">
+  <h2>{{ course.courseName }}</h2>
+  <h3 class="subtitle">{{ course.courseCode }}</h3>
   
+  <hr class="divider">
+
+  <div class="details">
+    <p><strong>Okul Yılı:</strong> {{ course.courseYear }}</p>
+    <p><strong>Okul Dönemi:</strong> {{ course.courseSemester }}</p>
+    <p><strong>Ders Tanımı:</strong> {{ course.courseDescription }}</p>
+    <p><strong>Kredi:</strong> {{ course.courseCredit }}</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="learning-outcomes">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12]">P{{ p }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let outcome of course?.courseLearningOutcomes; let i = index">
+          <th>{{ outcome.outcome }}</th>
+          <td *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12]">
+            <input type="number" min="1" max="5" [(ngModel)]="outcome.pValues['P' + p]">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="image-container">
+    <img src="assets/programCikti.png" alt="Program Çıktısı öğelerini gösteren görsel">
+  </div>
+
+  <hr class="divider">
+
+  <p><strong>Ders İzlencesi:</strong> 
+    <a [href]="course.courseSyllabus" target="_blank">Ders İzlencesini Aç</a>
+  </p>
+
+  <div class="buttons">
+    <button (click)="updateCourse()" class="btn btn-outline-warning">Update</button>
+    <button (click)="deleteCourse()" class="btn btn-outline-danger">Delete</button>
+  </div>
+
+</div>
+<div *ngIf="!course">
+  <h2>Loading course details...</h2>
+</div>
