@@ -30,30 +30,29 @@ export class LoginComponent {
 
   errMessage: string | null = null;
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const rawForm = this.loginForm.getRawValue();
     const email = rawForm.email ?? '';
     const password = rawForm.password ?? '';
     const role = rawForm.role ?? '';
 
-    this.accountService.login(email, password).subscribe({
-      next: () => {
-        const currentUser = this.auth.currentUser;
-        if(currentUser){
-          this.accountService.getUserRole(currentUser.uid).then(role => {
-            if(role === 'supervisor'){
-              this.router.navigate(['/supervisor']);
-            } else if(role === 'associate'){
-              this.router.navigate(['/associate']);
-            } else if(role === 'headOfDepartment') {
-              this.router.navigate(['/headOfDepartment']);
-            } 
-        })};
-      },
-      error: (err) => {
-        this.errMessage = err.code;
+    try {
+      await this.accountService.login(email, password).toPromise();
+      const currentUser = this.auth.currentUser;
+      if (currentUser) {
+        await this.accountService.getUserRole(currentUser.uid).subscribe((user) => {
+          if (user === 'supervisor') {
+            this.router.navigate(['/supervisor']);
+          } else if (user === 'associate') {
+            this.router.navigate(['/associate']);
+          } else if (user === 'headOfDepartment') {
+            this.router.navigate(['/headOfDepartment']);
+          }
+        });
       }
-    });
+    } catch (err: any) {
+      this.errMessage = err.message;
+    }
   }
 
   navigateToRegister() {

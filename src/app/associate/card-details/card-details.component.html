@@ -1,4 +1,6 @@
-<div *ngIf="course" class="container">
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<form *ngIf="!loading && course" class="container" [formGroup]="courseForm" (ngSubmit)="updateCourse()">
   <h2>{{ course.courseName }}</h2>
   <h3 class="subtitle">{{ course.courseCode }}</h3>
   
@@ -25,7 +27,7 @@
         <tr *ngFor="let outcome of course?.courseLearningOutcomes; let i = index">
           <th>{{ outcome.outcome }}</th>
           <td *ngFor="let p of [1,2,3,4,5,6,7,8,9,10,11,12]">
-            <input type="number" min="1" max="5" [(ngModel)]="outcome.pValues['P' + p]">
+            <input type="number" min="1" max="5" id="courseOutcomesScore" formControlName="courseOutcomesScore" class="form-control">
           </td>
         </tr>
       </tbody>
@@ -38,16 +40,35 @@
 
   <hr class="divider">
 
+  <div class="form-group mb-3">
+    <h3>Değerlendirme Tipleri</h3>
+    <select id="assesmentTypes" formControlName="assesmentTypes" class="form-control">
+      <option *ngFor="let type of assessmentTypes" value="type">{{ type }}</option>
+      <option value="">Yeni Değerlendirme Türü...</option>
+    </select>
+    <input type="text" *ngIf="selectedAssessmentType === ''" id="courseAssessmentsScore" formControlName="courseAssessmentsScore"  class="form-control"  placeholder="Puan">
+    <button *ngIf="selectedAssessmentType === ''" (click)="addAssessmentType()" class="btn btn-sm btn-outline-primary">Ekle</button>
+    <br>
+    <ul *ngIf="selectedAssessmentType">
+      <li>
+        {{ selectedAssessmentType }}
+        <button (click)="removeAssessmentType(selectedAssessmentType)" class="btn btn-sm btn-outline-danger">Kaldır</button>
+      </li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+  
   <p><strong>Ders İzlencesi:</strong> 
     <a [href]="course.courseSyllabus" target="_blank">Ders İzlencesini Aç</a>
   </p>
 
   <div class="buttons">
-    <button (click)="updateCourse()" class="btn btn-outline-warning">Update</button>
+    <button type="submit" class="btn btn-outline-warning">Update Course</button>
     <button (click)="deleteCourse()" class="btn btn-outline-danger">Delete</button>
   </div>
 
-</div>
+</form>
 <div *ngIf="!course">
   <h2>Loading course details...</h2>
 </div>

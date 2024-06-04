@@ -1,1 +1,34 @@
-<p>supervisor works!</p>
+<!-- <p>supervisor works!</p>
+<div class="container">
+    <h2>Onay Bekleyen Formlar</h2>
+    <form >
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Ders</th>
+            <th>Okul Yılı</th>
+            <th>Dönem</th>
+            <th>Onay</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="courses">
+          <tr *ngFor="let course of courses; let i = index" >
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.courseYear }}</td>
+            <td>{{ course.courseSemester }}</td>
+            <td>
+              <select formControlName="approval" class="form-control">
+                <option value="pending">Beklemede</option>
+                <option value="approved">Onayla</option>
+                <option value="rejected">Reddet</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="buttons">
+        <button class="btn btn-success" type="submit">Gönder</button>
+      </div>
+    </form>
+  </div>
+   -->

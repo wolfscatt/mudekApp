@@ -1,6 +1,13 @@
 <div class="container">
     <h2>Onay Bekleyen Formlar</h2>
-    <form [formGroup]="form" (ngSubmit)="submitApproval()">
+
+    <div class="buttons">
+      <button class="btn btn-primary" (click)="setFilter('pending')">Beklemede</button>
+      <button class="btn btn-success" (click)="setFilter('approved')">Onaylananlar</button>
+      <button class="btn btn-danger" (click)="setFilter('rejected')">Reddedilenler</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -10,11 +17,11 @@
             <th>Onay</th>
           </tr>
         </thead>
-        <tbody formArrayName="approvalStatus">
-          <tr *ngFor="let status of approvalStatus.controls; let i = index" [formGroupName]="i">
-            <td>{{ status.value.course }}</td>
-            <td>{{ status.value.schoolYear }}</td>
-            <td>{{ status.value.semester }}</td>
+        <tbody formArrayName="courses">
+          <tr *ngFor="let course of courses; let i = index" [formGroupName]="i"  (click)="getCourse(course)">
+            <td>{{ course.courseName }}</td>
+            <td>{{ course.courseYear }}</td>
+            <td>{{ course.courseSemester }}</td>
             <td>
               <select formControlName="approval" class="form-control">
                 <option value="pending">Beklemede</option>
@@ -26,8 +33,7 @@
         </tbody>
       </table>
       <div class="buttons">
-        <button type="submit" class="btn btn-success">Onayla</button>
-        <button type="button" class="btn btn-danger" (click)="rejectForm()">Geri Gönder</button>
+        <button class="btn btn-success" type="submit">Gönder</button>
       </div>
     </form>
   </div>

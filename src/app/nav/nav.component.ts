@@ -21,7 +21,7 @@ export class NavComponent implements OnInit{
     this.accountService.user$.subscribe(user => {
       this.isLoggedIn = !!user;
       if(user){
-        this.accountService.getUserRole(user.uid).then(role => {
+        this.accountService.getUserRole(user.uid).subscribe(role => {
           this.userRole = role;
         });
       }else{

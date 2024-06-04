@@ -4,6 +4,7 @@ import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { AccountService } from './services/account.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,17 +17,21 @@ export class AppComponent implements OnInit{
   accountService = inject(AccountService);
   
   ngOnInit(): void {
-    this.accountService.user$.subscribe(user => {
+    this.accountService.trackCurrentUser().pipe(
+      catchError(err => {
+        console.error('Error tracking current user:', err);
+        return of(null); // Hata durumunda null döner
+      })
+    ).subscribe(user => {
       if (user) {
         this.accountService.currentUserSignal.set({
-          email: user.email!,
-          displayName: user.displayName!
+          email: user['email']!,
+          displayName: user['displayName']!
         });
       } else {
         this.accountService.currentUserSignal.set(null);
       }
-      console.log('User: '+this.accountService.currentUserSignal());
+      console.log('User: ', this.accountService.currentUserSignal());
     });
-
   }
 }

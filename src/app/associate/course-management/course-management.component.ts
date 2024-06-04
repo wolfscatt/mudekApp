@@ -30,6 +30,7 @@ export class CourseManagementComponent {
     courseDescription: ['', [Validators.required]],
     courseLearningOutcomes: this.fb.array([]),
     courseSyllabus: [null, [Validators.required]],
+    courseAssesments: [null, [Validators.required]],
     courseInstructor: ['', [Validators.required]]
   });
 
@@ -77,6 +78,7 @@ export class CourseManagementComponent {
         formValue.courseDescription!,
         learningOutcomesWithPValues,
         formValue.courseSyllabus!,
+        formValue.courseAssesments!,
         formValue.courseInstructor!
       );
 
@@ -86,12 +88,14 @@ export class CourseManagementComponent {
             syllabusUrl => {
               courseData.courseSyllabus = syllabusUrl;
               this.addToFirestore(courseData);
+              console.log(courseData);
             },
             error => {
               console.error('Error uploading syllabus:', error);
             }
           );
       } else {
+        console.log(courseData);
         this.addToFirestore(courseData);
       }
     }
@@ -99,14 +103,16 @@ export class CourseManagementComponent {
 
   private addToFirestore(courseData: Course): void {
     this.firebaseService.addData('courses', courseData.toJSON())
-      .then(() => {
+      .subscribe(() => {
         this.courses.push(courseData);
         console.log('Course added successfully:', courseData);
         this.resetForm();
-      })
-      .catch(error => {
+      },
+      error => {
         console.error('Error adding course:', error);
-      });
+      }
+    );
+      
   }
   
 
